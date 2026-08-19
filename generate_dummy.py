@@ -1,0 +1,1 @@
+# Uso opcional; O código daqui vai gerar os logs falsos para que possa testar/simular

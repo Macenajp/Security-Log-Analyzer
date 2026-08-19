@@ -1,0 +1,1 @@
+# Aqui vai importar o log_reader para pegar as linhas suspeitas, e depois importar o slm_analyzer para mandar cada linha filtrada para a IA e dar o print do relatório final na tela

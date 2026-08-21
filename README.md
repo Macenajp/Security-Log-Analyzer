@@ -16,8 +16,8 @@ Prerequisites: Ensure you have Python3 and Ollama installed and running on your 
     cd Security-Log-Analyzer
     python3 -m venv venv
 
-    # On Linux, use: source venv/bin/activate  
-    # On Windows, use: .\venv\Scripts\activate
+    source venv/bin/activate  # On Linux
+    .\venv\Scripts\activate # On Windows
 
     pip install requests
     ```
@@ -30,7 +30,7 @@ Prerequisites: Ensure you have Python3 and Ollama installed and running on your 
 
 3. Run the analyzer:
     ```bash
-    python generate_dummy.py  # Generates a local 'test_auth.log' with simulated attacks
+    python generator_Dummy_Logs.py  # Generates a local 'test_auth.log' with simulated attacks
     ```
     ```bash
     python main.py
@@ -39,7 +39,7 @@ Prerequisites: Ensure you have Python3 and Ollama installed and running on your 
 
 ## 📡​| SLM models currently being tested
 #### Models:
-- 📌​ |Phi-4 Mini (3.8B); It averaged approximately 7.5 tokens per second, which is 2 tokens per second more than Gemma and Qwen.
+- 📌​| Phi-4 Mini (3.8B); It averaged approximately 7.5 tokens per second, which is 2 tokens per second more than Gemma and Qwen.
 - Gemma 3 (4B)
 - Qwen3 (4B)
 

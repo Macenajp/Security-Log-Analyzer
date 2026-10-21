@@ -1,5 +1,6 @@
 import requests
 import json
+import re
 
 def analyze_Log_IA(log_Line, modelo="phi4-mini:latest"):
     url = "http://localhost:11434/api/generate"
@@ -30,12 +31,27 @@ def analyze_Log_IA(log_Line, modelo="phi4-mini:latest"):
     try:
         resposta = requests.post(url, json=dados)
         resposta.raise_for_status()
-        texto_puro = resposta.json().get("response", "").strip()
         
-        # Bloco realiza a conversão do Json para um dicionário Python
-        return json.loads(texto_puro)
+        all_Data = resposta.json()
+        plain_Text = all_Data.get("response", "").strip()
+
+        tokens = all_Data.get("eval_count", 0)
+        time_Nanoseconds = all_Data.get("eval_duration", 1)
+        time_Seconds = time_Nanoseconds / 1e9
+        tokens_Per_Seconds = tokens / time_Seconds if time_Seconds > 0 else 0
+
+        # Filtro de Regex para ignorar markdown (ex: ```json) e salvar apenas as chaves
+        match = re.search(r'\{.*\}', plain_Text, re.DOTALL)
+        clean_json_str = match.group(0) if match else plain_Text
+            
+        structured_Response = json.loads(clean_json_str)
+        structured_Response["telemetry"] = {
+            "tokens_sec": round(tokens_Per_Seconds, 2)
+        }
+        
+        return structured_Response
         
     except json.JSONDecodeError:
-        return {"error": "Falha ao estruturar o JSON", "raw_output": texto_puro}
+        return {"error": "Falha ao estruturar o JSON", "raw_output": plain_Text}
     except requests.exceptions.RequestException as e:
         return {"error": f"Erro de conexão: {e}"}

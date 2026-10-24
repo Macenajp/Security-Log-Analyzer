@@ -8,17 +8,17 @@ SecLA (Security Log Analyzer) functions as a security log reader that integrates
 
 ---
 
-## ✨ | Updates (v1.1)
-* **Terminal UI (TUI):** Built with `rich`, your entire table is rendered at once, as it generates superior performance efficiency.
-* **Anti-Markdown JSON Shield:** Regex-hardened response parser in `slm_Analyzer.py` to prevent JSON decoding crashes across different SLM families.
-* **Automated Telemetry & Benchmarking:** Tracks inference speed (`tokens/s`) per log entry and automatically exports structured results to `.csv`.
-* **Attack Simulation Engine:** Includes `generator_Dummy_Logs.py` to synthesize realistic SSH authentication logs (`Accepted publickey` vs. `Failed password` attacks).
+## 🚀 | Updates (v1.2)
+
+* **Threat Intelligence API:** Integration with the VirusTotal API for automatic, real-time checking of the global reputation of source IP addresses.
+* **Environment Security:** Protecting credentials with `.env` to ensure that API keys are not exposed in the source code.
+* **Enhanced Terminal UI:** New “VirusTotal” column in the terminal interface (`rich`) with dynamic conditional formatting and visual improvements to the table.
+* **Smart Caching System:** Implementation of a local memory cache (`vt_cache.json`) for IPs that have already been scanned, blocking duplicate requests, eliminating latency, and preventing API quota waste.
 
 <br>
 
-
 ---
-## 💿​| How to Install and Use
+## 📡​| How to Install and Use
 Prerequisites: Ensure you have Python3 and Ollama installed and running on your system.
   
 1. Clone the repository and setup the environment:
@@ -31,16 +31,21 @@ Prerequisites: Ensure you have Python3 and Ollama installed and running on your 
     source venv/bin/activate  # On Linux
     .\venv\Scripts\activate # On Windows
 
-    pip install requests rich
+    pip install requests rich python-dotenv
     ```
 
-2. Download the default SLM (using the terminal):
+2. Create a file named ".env" (without the quotation marks) in the project root directory and add your VirusTotal key:
+   ```bash
+   VT_API_KEY=sua_chave_do_virustotal_aqui
+   ```
+
+3. Download the default SLM (using the terminal):
     ```bash
     ollama pull phi4-mini   
     ```
 
 
-3. Run the analyzer:
+4. Run the analyzer:
     ```bash
     python generator_Dummy_Logs.py  # Generates a local 'test_auth.log' with simulated attacks
     ```
@@ -50,7 +55,7 @@ Prerequisites: Ensure you have Python3 and Ollama installed and running on your 
 <br>
 
 ---
-## 📡​| Hardware Viability & Benchmarks
+## 💻​| Hardware Viability & Benchmarks
 #### Models:
 Models were evaluated across two distinct hardware profiles to measure inference speed (tokens/s), JSON schema compliance, and contextual severity accuracy (distinguishing root/admin attacks as HIGH vs. standard user attacks as MEDIUM).
 

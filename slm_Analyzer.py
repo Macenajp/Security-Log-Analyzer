@@ -2,7 +2,7 @@ import requests
 import json
 import re
 
-def analyze_Log_IA(log_Line, modelo="phi4-mini:latest"):
+def analyze_Log_IA(log_Line, model="phi4-mini:3.8b"):
     url = "http://localhost:11434/api/generate"
     
     # Bloco do prompt imutável para a criação do Json
@@ -19,7 +19,7 @@ def analyze_Log_IA(log_Line, modelo="phi4-mini:latest"):
     """
     
     dados = {
-        "model": modelo,
+        "model": model,
         "prompt": prompt_str,
         "stream": False,
         "format": "json", 
@@ -29,10 +29,10 @@ def analyze_Log_IA(log_Line, modelo="phi4-mini:latest"):
     }
     
     try:
-        resposta = requests.post(url, json=dados)
-        resposta.raise_for_status()
+        answer = requests.post(url, json=dados)
+        answer.raise_for_status()
         
-        all_Data = resposta.json()
+        all_Data = answer.json()
         plain_Text = all_Data.get("response", "").strip()
 
         tokens = all_Data.get("eval_count", 0)

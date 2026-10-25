@@ -8,13 +8,11 @@ SecLA (Security Log Analyzer) functions as a security log reader that integrates
 
 ---
 
-## 🚀 | Updates (v1.2.1)
+## 🚀 | Updates (v1.2.2)
 
-* **Threat Intelligence API:** Integration with the VirusTotal API for automatic, real-time checking of the global reputation of source IP addresses.
-* **Environment Security:** Protecting credentials with `.env` to ensure that API keys are not exposed in the source code.
-* **Enhanced Terminal UI:** New “VirusTotal” column in the terminal interface (`rich`) with dynamic conditional formatting and visual improvements to the table.
-* **Smart Caching System:** Implementation of a local memory cache (`vt_cache.json`) for IPs that have already been scanned, blocking duplicate requests, eliminating latency, and preventing API quota waste.
-* **Modular Architecture:** Restructured the project into specific directories (`core/`, `scripts/`, `data/`) to improve scalability, maintainability, and isolate benchmark data.
+* **Standardization:** Refactored all variables and functions to strictly follow PEP 8 `snake_case` naming conventions.
+* **New table:** A secondary `summary_table` was created to make it easier to view the results.
+* **Design Selection:** The layout has been improved, and some colors have been changed to make the text easier to read and understand.
 
 <br>
 

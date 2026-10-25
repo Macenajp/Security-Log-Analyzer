@@ -7,20 +7,19 @@ from rich.table import Table
 from rich.panel import Panel
 from rich.align import Align # V1.2
 
-from log_Reader import filter_Suspicious_Logs
-from slm_Analyzer import analyze_Log_IA
-
-from threat_Intel import check_IP
+from core.log_Reader import filter_Suspicious_Logs
+from core.slm_Analyzer import analyze_Log_IA
+from core.threat_Intel import check_IP
 
 # V1.2 | Funções para carregar e salvar cache de IPs analisados pelo VirusTotal
 def load_cache():
-    if os.path.exists("vt_cache.json"):
-        with open("vt_cache.json", "r") as f:
+    if os.path.exists("data/vt_cache.json"):
+        with open("data/vt_cache.json", "r") as f:
             return json.load(f)
     return {}
 
 def save_cache(cache):
-    with open("vt_cache.json", "w") as f:
+    with open("data/vt_cache.json", "w") as f:
         json.dump(cache, f, indent=4)
 
 
@@ -31,7 +30,7 @@ def start_interface():
     
     selected_Model = "phi4-mini:3.8b"
     
-    log_File = "test_auth.log"
+    log_File = "data/test_auth.log"
     console.print(f"\n[*] Lendo arquivo: [yellow]{log_File}[/yellow]...")
     suspicious_Logs = filter_Suspicious_Logs(log_File)
 
@@ -42,7 +41,8 @@ def start_interface():
     console.print(f"[bold red][!] A engine encontrou {len(suspicious_Logs)} eventos suspeitos.[/bold red]")
     console.print(f"[*] Repassando para análise com: [bold magenta]{selected_Model}[/bold magenta]...\n")
 
-    arquivo_csv = f"benchmark_{selected_Model.replace(':', '_')}.csv"
+    arquivo_csv = f"data/benchmarks/benchmark_{selected_Model.replace(':', '_')}.csv"
+    os.makedirs("data/benchmarks", exist_ok=True)
 
     # V1.1 Tabela de exibição para o terminal
     table = Table(show_lines=True, header_style="bold #AFC0FF", border_style="#AFC0FF")

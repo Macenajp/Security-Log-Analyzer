@@ -3,7 +3,7 @@
 import random
 from datetime import datetime, timedelta
 
-def generate_Dummy_Logs(filename="test_auth.log", num_lines=200):
+def generate_Dummy_Logs(filename="data/test_auth.log", num_lines=30):
     ips = ["192.168.1.15", "10.0.0.42", "203.0.113.5", "198.51.100.22"]
     users = ["root", "admin", "joao"]
     

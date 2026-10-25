@@ -1,7 +1,16 @@
-### English Version:
 # 📈 SecLA - Changelog and Visual Evolution
 
 This document tracks structural and interface updates to the Security Log Analyzer (SecLA) and will be updated regularly to reflect any details and/or content added to the project.
+
+---
+## [v1.2.1] - Architectural Restructuring
+**Focus:** Code organization, scalability, and workspace maintainability.
+
+* Reorganized the project into a modular folder structure (`core/`, `scripts/`, `data/`).
+* Created an exclusive subfolder for telemetry reports (`data/benchmarks/`).
+* Updated internal Python imports to reflect the new flat-to-modular architecture.
+
+<br>
 
 ---
 

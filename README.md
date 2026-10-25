@@ -76,3 +76,9 @@ Models were evaluated across two distinct hardware profiles to measure inference
 
 > **⚡ Architectural Overview of the Rendering UI (Live vs. Batch):** 
 > During testing of version 1.1, real-time line-by-line rendering (rich.live) was evaluated against static batch rendering. The continuous redrawing of the terminal at 10 Hz caused the average inference throughput with the PHI4-Mini to experience a performance drop of ~6.48%. To extract 100% of the hardware’s raw performance, SecLA renders the table in batch mode by default as soon as the analysis batch is complete.
+>
+> <br>
+
+---
+
+📜 **Veja o histórico completo de atualizações visuais e técnicas no [CHANGELOG](CHANGELOG.md)**

@@ -1,5 +1,6 @@
 from core.ui import start_interface
-from core.threat_Intel import check_IP
+from core.threat_intel import check_ip
+
 
 def main():
     start_interface()

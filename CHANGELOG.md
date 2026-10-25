@@ -3,6 +3,18 @@
 This document tracks structural and interface updates to the Security Log Analyzer (SecLA) and will be updated regularly to reflect any details and/or content added to the project.
 
 ---
+## [v1.2.2] - UI/UX Refinement & PEP 8 Standardization
+**Focus:** Visual consistency, readability, and Python coding standards.
+
+* **Standardization:** Refactored all variables and functions to strictly follow PEP 8 `snake_case` naming conventions.
+* **New table:** A secondary `summary_table` was created to make it easier to view the results.
+* **Design Selection:** The layout has been improved, and some colors have been changed to make the text easier to read and understand.
+
+> **<img width="1023" height="707" alt="Image" src="https://github.com/user-attachments/assets/b7aa8643-f345-492f-9cbe-d293bd66d630" />**
+
+<br>
+
+---
 ## [v1.2.1] - Architectural Restructuring
 **Focus:** Code organization, scalability, and workspace maintainability.
 
@@ -24,7 +36,7 @@ This document tracks structural and interface updates to the Security Log Analyz
   * Alert-based color coding (Green for 0 detections, Red for confirmed threats).
   * Modern, clean visual design and color scheme for better readability
 
-> **<img width="1023" height="578" alt="Image" src="https://github.com/user-attachments/assets/d5d81bf1-f9cb-4850-8631-af4f36d956f6" />**
+> **<img width="1023" height="578" alt="Image" src="https://github.com/user-attachments/assets/1e9ccca9-f0ca-4c85-a856-122d50b9a77d" />**
 
 <br>
 

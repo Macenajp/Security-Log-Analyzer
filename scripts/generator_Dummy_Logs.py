@@ -3,23 +3,31 @@
 import random
 from datetime import datetime, timedelta
 
-def generate_Dummy_Logs(filename="data/test_auth.log", num_lines=30):
+
+def generate_dummy_logs(filename="data/test_auth.log", num_lines=50):
     ips = ["192.168.1.15", "10.0.0.42", "203.0.113.5", "198.51.100.22"]
     users = ["root", "admin", "joao"]
-    
-    start_Time = datetime.now() - timedelta(hours=1)
-    
+
+   # V1.3 Listas de rotas comuns para simular tráfego web
+    methods = ["GET", "POST", "PUT", "DELETE"]
+    normal_routes = ["/home", "/login", "/dashboard", "/contato", "/sobre", "/produtos", "/servicos", "/assets/logo.png", "/assets/style.css", "/assets/script.js", "/favicon.ico"]
+    malicious_routes = ["/login?user=admin' OR '1'='1 UNION SELECT","/etc/passwd", "/var/www/html/config.php", "/admin.php", "/login.php", "/wp-config.php", "/.git", "/.htaccess", "/.env", "/config.json", "/backup.zip", "/admin", "/config", "/api", "/secret", "/wp-login.php", "/config.php"]
+
+
+    start_time = datetime.now() - timedelta(hours=1)
+
+    # V1.3 | Atualização para um padrão universal de logs
     with open(filename, 'w') as f:
         for i in range(num_lines):
-            start_Time += timedelta(seconds=random.randint(1, 15))
-            timestamp = start_Time.strftime("%b %d %H:%M:%S")
+            start_time += timedelta(seconds=random.randint(1, 15))            
+            web_timestamp = start_time.strftime("%d/%b/%Y:%H:%M:%S")
             
             if random.random() > 0.2:
-                f.write(f"{timestamp} pop-os sshd[123]: Accepted publickey for joao from {ips[0]} port 50123 ssh2\n")
+                f.write(f'{ips[0]} - - [{web_timestamp} -0300] "{random.choice(methods)} {random.choice(normal_routes)} HTTP/1.1" 200\n')                       # Tráfego Normal (Código HTTP 200 = Sucesso)
             else:
-                f.write(f"{timestamp} pop-os sshd[567]: Failed password for {random.choice(users)} from {random.choice(ips[2:])} port 33456 ssh2\n")
+                f.write(f'{random.choice(ips[2:])} - - [{web_timestamp} -0300] "{random.choice(methods)} {random.choice(malicious_routes)} HTTP/1.1" 403\n')    # Tráfego Malicioso (Código HTTP 403 = Proibido/Bloqueado)
             
     print(f"[+] Arquivo {filename} gerado.")
 
 if __name__ == "__main__":
-    generate_Dummy_Logs()
+    generate_dummy_logs()

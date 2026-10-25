@@ -5,7 +5,8 @@ from dotenv import load_dotenv
 load_dotenv()
 VT_API_KEY = os.getenv("VT_API_KEY")
 
-def check_IP(ip):
+
+def check_ip(ip):
     url = f"https://www.virustotal.com/api/v3/ip_addresses/{ip}"
     headers = {
         "x-apikey": VT_API_KEY
@@ -35,5 +36,5 @@ def check_IP(ip):
     
 
 if __name__ == "__main__":
-    check_Result = check_IP("8.8.8.8")
-    print(check_Result)
+    check_result = check_ip("8.8.8.8")
+    print(check_result)

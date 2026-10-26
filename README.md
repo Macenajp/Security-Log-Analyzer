@@ -81,4 +81,4 @@ Models were evaluated across two distinct hardware profiles to measure inference
 
 ---
 
-📜 **Veja o histórico completo de atualizações visuais e técnicas no [CHANGELOG](CHANGELOG.md)**
+📜 **See the complete history of visual and technical updates in the [CHANGELOG](CHANGELOG.md)**

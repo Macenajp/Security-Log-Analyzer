@@ -6,16 +6,15 @@ This document tracks structural and interface updates to the Security Log Analyz
 ## [v1.2.2] - UI/UX Refinement & PEP 8 Standardization
 **Focus:** Visual consistency, readability, and Python coding standards.
 
-> 📝 **Architecture Note (Preparation for v1.3):**
-> Although initially structured as a visual update, v1.2.2 introduced the multi-format engine in `log_reader.py` (new Nginx/Apache regex) and a strict rule precedence hierarchy in `slm_analyzer.py`.
-> 
-> **Impact:** This complexity altered the hardware landscape. The `phi4-mini` model (former default) dropped from 100% to 24.4% accuracy when dealing with web logs, losing the ability to separate severities. In contrast, `gemma3:4b` took the definitive lead as the default engine, reaching 80% overall accuracy, 100% severity obedience (separating HIGH attacks from MEDIUM common errors), and operating significantly faster (~77 t/s).
-
 * **Standardization:** Refactored all variables and functions to strictly follow PEP 8 `snake_case` naming conventions.
 * **New table:** A secondary `summary_table` was created to make it easier to view the results.
 * **Design Selection:** The layout has been improved, and some colors have been changed to make the text easier to read and understand.
 
 > **<img width="1023" height="707" alt="Image" src="https://github.com/user-attachments/assets/b7aa8643-f345-492f-9cbe-d293bd66d630" />**
+> 📝 **Architecture Note (Preparation for v1.3):**
+> Although initially structured as a visual update, v1.2.2 introduced the multi-format engine in `log_reader.py` (new Nginx/Apache regex) and a strict rule precedence hierarchy in `slm_analyzer.py`.
+> 
+> **Impact:** This complexity has changed the hardware landscape. The `phi4-mini` model (the former standard) saw its accuracy drop from 100% to 24% when processing web logs, losing its ability to distinguish severity levels. In contrast, `gemma3:4b` has definitively taken the lead as the standard engine, achieving 80% in initial overall accuracy tests and, more recently, 100% overall accuracy and 100% compliance with severity levels (distinguishing HIGH-severity attacks from common MEDIUM-severity errors), all while operating significantly faster (~77 t/s).
 
 <br>
 

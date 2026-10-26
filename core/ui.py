@@ -1,16 +1,16 @@
 import csv
-import json # V1.2
-import os # V1.2
+import json # v1.2
+import os # v1.2
 from rich.console import Console
 from rich.table import Table
 from rich.panel import Panel
 from rich.align import Align
-from rich.text import Text  #V.1.2.2
+from rich.text import Text  # v.1.2.2
 
 from core.log_reader import filter_suspicious_logs
 from core.slm_analyzer import analyze_log_ia
 from core.threat_intel import check_ip
-
+from core.database import insert_log # v1.3
 
 # V1.2 | Funções para carregar e salvar cache de IPs analisados pelo VirusTotal
 def load_cache():
@@ -33,7 +33,7 @@ def start_interface():
 
     console.print(Panel(cabecalho, border_style="#AFC0FF", expand=False))
     
-    selected_model = "phi4-mini:3.8b"  # Modelo de IA padrão
+    selected_model = "gemma3:4b"  # Modelo de IA padrão
     log_File = "data/test_auth.log"
 
     console.print(f"\n[bold #AFC0FF][INFO][/bold #AFC0FF] Lendo arquivo: [magenta]{log_File}[/magenta]")
@@ -109,6 +109,19 @@ def start_interface():
                     formatted_virustotal = f"[bold green]{result_virustotal}[/bold green]"
 
                 primary_table.add_row(str(idx), origin, threat, formatted_level, f"{speed_per_sec} t/s", formatted_virustotal)
+
+                # v1.3 | Inserindo os logs no banco de dados SQLite
+                insert_log(
+                    model=selected_model,
+                    ip=origin,
+                    threat=threat,
+                    severity=level,
+                    vt_reputation=result_virustotal,
+                    performance_ts=f"{speed_per_sec} t/s",
+                    raw_log=log_line
+                )
+
+
 
                 writer.writerow({
                     'Modelo': selected_model,

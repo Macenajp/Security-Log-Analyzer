@@ -3,7 +3,7 @@ import json
 import re
 
 
-def analyze_log_ia(log_Line, model="phi4-mini:3.8b"):
+def analyze_log_ia(log_Line, model="gemma3:4b"):
     url = "http://localhost:11434/api/generate"
     
     # Bloco do prompt imutável para a criação do Json
@@ -11,7 +11,7 @@ def analyze_log_ia(log_Line, model="phi4-mini:3.8b"):
     Analise o seguinte log de segurança. 
     Responda APENAS com um objeto JSON válido contendo as chaves:
     - "ip": (IP do atacante)
-    - "threat": (classifique usando EXATAMENTE UMA destas opções: "BRUTE_FORCE", "INVALID_USER", "SQL_INJECTION", "PATH_TRAVERSAL", "FORBIDDEN_ACCESS")
+    - "threat": (classifique usando EXATAMENTE UMA destas opções: "BRUTE_FORCE", "INVALID_USER", "SQL_INJECTION", "PATH_TRAVERSAL", "FORBIDDEN_ACCESS", "RESOURCE_NOT_FOUND")
     - "severity": (use EXATAMENTE "LOW", "MEDIUM" ou "HIGH")
     
     Regras de Classificação de Ameaça (threat) - AVALIE NESTA ORDEM EXATA DE PRIORIDADE:
@@ -19,11 +19,12 @@ def analyze_log_ia(log_Line, model="phi4-mini:3.8b"):
     2. Se o log contiver buscas por diretórios sensíveis (ex: '.env', '.git', 'config.php', 'passwd'), use "PATH_TRAVERSAL".
     3. Se o log contiver 'Failed password' ou 'Invalid user', use "INVALID_USER" ou "BRUTE_FORCE".
     4. Se o log retornar bloqueio (HTTP 403) E NÃO se encaixar em NENHUMA das regras acima, use "FORBIDDEN_ACCESS".
+    5. Se o log retornar página não encontrada (HTTP 404), use "RESOURCE_NOT_FOUND".
     
     Regras de Severidade (severity):
     - "HIGH": Injeções SQL, acessos a arquivos '.env' ou ataques usando usuários como 'root' e 'admin'.
     - "MEDIUM": Acesso negado comum (403) em páginas web não críticas ou falha de login de usuários normais.
-    - "LOW": Qualquer outra anomalia menor.
+    - "LOW": Erros de página não encontrada (404) ou qualquer outra anomalia menor.
     
     NÃO inclua nenhuma explicação, texto adicional, markdown ou blocos de raciocínio.
     

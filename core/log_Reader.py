@@ -6,15 +6,9 @@ def filter_suspicious_logs(filepath):
     
     # Padrões de anomalias (Regex)
     patterns = [
-        r"Failed password",
-        r"Invalid user",
-        r"Connection closed by authenticating user",
-        #V1.3 | Adicionando padrões de tráfego web suspeito
-        r" 403\b",
-        r"\.env",
-        r"\.git",
-        r"config\.php",
-        r"UNION SELECT"
+        r"Failed password", r"Invalid user", r"Connection closed by authenticating user",   # SSH
+        r" 401\b", r" 403\b", r" 404\b", r"sqlmap", r"nmap", r"dirb", r"UNION SELECT",      # Nginx / Apache
+        r"segfault", r"kernel panic", r"unauthorized"                                       # Syslog
     ]
     
     try:

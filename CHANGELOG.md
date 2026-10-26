@@ -3,12 +3,25 @@
 This document tracks structural and interface updates to the Security Log Analyzer (SecLA) and will be updated regularly to reflect any details and/or content added to the project.
 
 ---
+## [v1.3] - Multi-Format Engine & Data Persistence
+**Focus:** Log ingestion expansion, strict AI reasoning, and relational database storage.
+
+* **Multi-Format Regex Engine:** Expanded `core/log_reader.py` to ingest web server logs (Nginx/Apache), successfully capturing HTTP 403, HTTP 404, SQL Injections, and directory scanning.
+* **SQLite Persistence:** Built `core/database.py` to automatically store all AI-processed logs into a local relational database (`data/secla_logs.db`), moving away from static CSV limitations and preparing for future analytical dashboards.
+* **Hierarchical AI Prompting:** Redesigned the `slm_analyzer.py` prompt with a strict 5-rule precedence hierarchy. The `gemma3:4b` model now accurately classifies SQLi, Path Traversal, and separates severities across HIGH, MEDIUM, and LOW (e.g., 404 Not Found) without ambiguity.
+* **Web Attack Simulator:** Upgraded `scripts/generator_dummy_logs.py` to synthesize realistic HTTP traffic, including normal 200/404 responses and 403 malicious injections.
+
+<br>
+
+
+---
 ## [v1.2.2] - UI/UX Refinement & PEP 8 Standardization
 **Focus:** Visual consistency, readability, and Python coding standards.
 
-* **Standardization:** Refactored all variables and functions to strictly follow PEP 8 `snake_case` naming conventions.
-* **New table:** A secondary `summary_table` was created to make it easier to view the results.
-* **Design Selection:** The layout has been improved, and some colors have been changed to make the text easier to read and understand.
+* **Multi-Format Regex Engine:** Expansion of `log_reader.py` to detect anomalous web traffic (Nginx/Apache), including patterns such as `403`, `.env`, and SQL injections.
+* **Hierarchical AI Prompting:** Implementation of strict precedence rules in `slm_analyzer.py` to eliminate ambiguities in threat classification (deductive zero-shot).
+* **UI/UX Refinement:** Dynamically centered main dashboard, color formatting in a separate table for VirusTotal, and addition of a secondary Summary Table.
+* **PEP 8 Standardization:** 100% refactoring of the code to `snake_case`.
 
 > **<img width="1023" height="707" alt="Image" src="https://github.com/user-attachments/assets/b7aa8643-f345-492f-9cbe-d293bd66d630" />**
 > 📝 **Architecture Note (Preparation for v1.3):**

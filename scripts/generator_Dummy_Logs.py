@@ -4,9 +4,9 @@ import random
 from datetime import datetime, timedelta
 
 
-def generate_dummy_logs(filename="data/test_auth.log", num_lines=50):
+def generate_dummy_logs(filename="data/test_auth.log", num_lines=500):
     ips = ["192.168.1.15", "10.0.0.42", "203.0.113.5", "198.51.100.22"]
-    users = ["root", "admin", "joao"]
+    users = ["root", "admin", "fulano"]
 
    # V1.3 Listas de rotas comuns para simular tráfego web
     methods = ["GET", "POST", "PUT", "DELETE"]

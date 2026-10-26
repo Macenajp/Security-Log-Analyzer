@@ -6,6 +6,11 @@ This document tracks structural and interface updates to the Security Log Analyz
 ## [v1.2.2] - UI/UX Refinement & PEP 8 Standardization
 **Focus:** Visual consistency, readability, and Python coding standards.
 
+> 📝 **Architecture Note (Preparation for v1.3):**
+> Although initially structured as a visual update, v1.2.2 introduced the multi-format engine in `log_reader.py` (new Nginx/Apache regex) and a strict rule precedence hierarchy in `slm_analyzer.py`.
+> 
+> **Impact:** This complexity altered the hardware landscape. The `phi4-mini` model (former default) dropped from 100% to 24.4% accuracy when dealing with web logs, losing the ability to separate severities. In contrast, `gemma3:4b` took the definitive lead as the default engine, reaching 80% overall accuracy, 100% severity obedience (separating HIGH attacks from MEDIUM common errors), and operating significantly faster (~77 t/s).
+
 * **Standardization:** Refactored all variables and functions to strictly follow PEP 8 `snake_case` naming conventions.
 * **New table:** A secondary `summary_table` was created to make it easier to view the results.
 * **Design Selection:** The layout has been improved, and some colors have been changed to make the text easier to read and understand.
@@ -62,3 +67,17 @@ This document tracks structural and interface updates to the Security Log Analyz
 * Log reader (`log_Reader.py`) focused on SSH failures.
 * Simple call via `requests` to the local `phi4-mini` model running via Ollama.
 * Output displayed as plain text/raw JSON in the terminal.
+
+**Tested Environments**
+* **Setup A (Main Workstation):** AMD Ryzen 7 5700X | 24 GB RAM DDR4 (2400 MHz (16gb + 8gb)) | NVIDIA RTX 4060 8GB VRAM (Windows 11)
+
+* **Setup B (Notebook):** Intel Core i3-1315U | 8 GB RAM DDR4 (3200 MHz Single-Channel) | Intel UHD Graphics (EndeavourOS Linux)
+
+*Benchmark Results*
+
+| Model | Parameters | Setup A | Setup B | Accuracy & Notes |
+|----------|----------|----------|----------|----------|
+| PHI4-Mini (default) | 4B | ~50.39t/s | ~7.87t/s | 100% Accuracy; Properly separates HIGH (admin / root) from MEDIUM (standard user) 
+| Gemma3| 4B | ~77.71t/s | ~7.61t/s| Fast, but over-flags 100% of suspicious events as HIGH severity (BRUTE_FORCE)
+| GLM-4 | 9B | ~31.13t/s | N/A | Stable JSON output, but ~1.6x slower than Phi-4 Mini and flags 100% of events as HIGH
+| QWEN3.5 | 4B | ERROR | ERROR | Collapses under strict Ollama API native JSON formatting restrictions, returning errors in 100% of requests

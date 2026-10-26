@@ -3,7 +3,7 @@ import json
 import re
 
 
-def analyze_log_ia(log_Line, model="gemma3:4b"):
+def analyze_log_ia(log_Line, model="phi4-mini:3.8b"):
     url = "http://localhost:11434/api/generate"
     
     # Bloco do prompt imutável para a criação do Json

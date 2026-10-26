@@ -8,13 +8,12 @@ SecLA (Security Log Analyzer) functions as a security log reader that integrates
 
 ---
 
-## 🚀 | Updates (v1.2.1)
+## 🚀 | Updates (v1.2.2)
 
-* **Threat Intelligence API:** Integration with the VirusTotal API for automatic, real-time checking of the global reputation of source IP addresses.
-* **Environment Security:** Protecting credentials with `.env` to ensure that API keys are not exposed in the source code.
-* **Enhanced Terminal UI:** New “VirusTotal” column in the terminal interface (`rich`) with dynamic conditional formatting and visual improvements to the table.
-* **Smart Caching System:** Implementation of a local memory cache (`vt_cache.json`) for IPs that have already been scanned, blocking duplicate requests, eliminating latency, and preventing API quota waste.
-* **Modular Architecture:** Restructured the project into specific directories (`core/`, `scripts/`, `data/`) to improve scalability, maintainability, and isolate benchmark data.
+* **Multi-Format Regex Engine:** Expansion of `log_reader.py` to detect anomalous web traffic (Nginx/Apache), including patterns such as `403`, `.env`, and SQL injections.
+* **Hierarchical AI Prompting:** Implementation of strict precedence rules in `slm_analyzer.py` to eliminate ambiguities in threat classification (deductive zero-shot).
+* **UI/UX Refinement:** Dynamically centered main dashboard, color formatting in a separate table for VirusTotal, and addition of a secondary Summary Table.
+* **PEP 8 Standardization:** 100% refactoring of the code to `snake_case`.
 
 <br>
 
@@ -69,10 +68,11 @@ Models were evaluated across two distinct hardware profiles to measure inference
 
 | Model | Parameters | Setup A | Setup B | Accuracy & Notes |
 |----------|----------|----------|----------|----------|
-| PHI4-Mini (default) | 4B | ~50.39t/s | ~7.87t/s | 100% Accuracy; Properly separates HIGH (admin / root) from MEDIUM (standard user) 
-| Gemma3| 4B | ~77.71t/s | ~7.61t/s| Fast, but over-flags 100% of suspicious events as HIGH severity (BRUTE_FORCE)
+| Gemma3 (default) | 4B | ~77.71t/s | ~7.61t/s |  **100% Accuracy (Top Performer):** Flawless zero-shot deduction for multi-format logs. Perfectly separated HIGH severities (Path Traversal/SQLi) from MEDIUM severities (HTTP 403 blocks). [View CSV](./data/benchmarks/benchmark_gemma3_4b.csv). |
+| PHI4-Mini | 4B | ~50.39t/s | ~7.87t/s | **24.0% Accuracy:** Suffers from context collapse with web logs. Failed severity obedience entirely, incorrectly flagging 100% of anomalies as HIGH. [View CSV](./data/benchmarks/benchmark_phi4-mini_3.8b.csv). |
 | GLM-4 | 9B | ~31.13t/s | N/A | Stable JSON output, but ~1.6x slower than Phi-4 Mini and flags 100% of events as HIGH
 | QWEN3.5 | 4B | ERROR | ERROR | Collapses under strict Ollama API native JSON formatting restrictions, returning errors in 100% of requests
+> 📁 **Raw Telemetry Data:** Review the simulated [test_auth.log](./data/test_auth.log) and the complete inference CSV outputs in the `data/benchmarks` directory.
 
 > **⚡ Architectural Overview of the Rendering UI (Live vs. Batch):** 
 > During testing of version 1.1, real-time line-by-line rendering (rich.live) was evaluated against static batch rendering. The continuous redrawing of the terminal at 10 Hz caused the average inference throughput with the PHI4-Mini to experience a performance drop of ~6.48%. To extract 100% of the hardware’s raw performance, SecLA renders the table in batch mode by default as soon as the analysis batch is complete.

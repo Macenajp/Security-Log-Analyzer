@@ -33,7 +33,7 @@ def start_interface():
 
     console.print(Panel(cabecalho, border_style="#AFC0FF", expand=False))
     
-    selected_model = "gemma3:4b"  # Modelo de IA padrão
+    selected_model = "phi4-mini:3.8b"  # Modelo de IA padrão
     log_File = "data/test_auth.log"
 
     console.print(f"\n[bold #AFC0FF][INFO][/bold #AFC0FF] Lendo arquivo: [magenta]{log_File}[/magenta]")

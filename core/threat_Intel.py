@@ -24,15 +24,15 @@ def check_ip(ip):
             suspicious = stats.get('suspicious', 0)
             
             if malicious > 0 or suspicious > 0:
-                 return f"ATENÇÃO: O IP {ip} foi reportado como malicioso por {malicious} motores e suspeito por {suspicious}!"
+                 return f"WARNING: The IP {ip} has been reported as malicious by {malicious} engines and suspicious by {suspicious}!"
             else:
-                 return f"TUDO LIMPO: O IP {ip} parece limpo e seguro (0 detecções)."
+                 return f"ALL CLEAR: The IP {ip} appears to be clean and secure (0 detections)."
                  
         else:
-            return f"Erro na requisição. Código de status: {answer.status_code}"
+            return f"Error in request. Status code: {answer.status_code}"
             
     except Exception as e:
-        return f"Ocorreu um erro: {e}"
+        return f"An error occurred: {e}"
     
 
 if __name__ == "__main__":

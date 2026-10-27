@@ -5,17 +5,17 @@ DB_PATH = "data/secla_logs.db"
 
 
 def get_connection():
-    """Garante que a pasta 'data' existe e retorna a conexão com o SQLite."""
+    """Ensures the 'data' folder exists and returns the SQLite connection."""
     os.makedirs("data", exist_ok=True)
     return sqlite3.connect(DB_PATH)
 
 
 def initialize_db():
-    """Cria a tabela 'security_logs' caso ela não exista no banco."""
+    """Creates the 'security_logs' table if it doesn't exist in the database."""
     conn = get_connection()
     cursor = conn.cursor()
     
-    # Criação modelo relacional
+    # Creating a Relational Model
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS security_logs (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -35,11 +35,11 @@ def initialize_db():
 
 
 def insert_log(model, ip, threat, severity, vt_reputation, performance_ts, raw_log):
-    """Função que será chamada pelo ui.py para salvar cada log na tabela."""
+    """Function that will be called by ui.py to save each log in the table."""
     conn = get_connection()
     cursor = conn.cursor()
     
-    # Injeção de valores protegendo contra SQL Injection usando (?)
+    # Value injection to protect against SQL injection using (?)
     cursor.execute('''
         INSERT INTO security_logs (model_used, source_ip, threat_type, severity, vt_reputation, performance_ts, raw_log)
         VALUES (?, ?, ?, ?, ?, ?, ?)
@@ -50,7 +50,7 @@ def insert_log(model, ip, threat, severity, vt_reputation, performance_ts, raw_l
 
 
 def get_filtered_logs(severity_filter=None):
-    """Busca logs no banco. Se severity_filter for passado, filtra por ele. Garante a ordem lógica."""
+    """Function to fetch logs from the database. If severity_filter is provided, it filters by that value. Ensures logical ordering."""
     conn = get_connection()
     cursor = conn.cursor()
     
@@ -61,7 +61,7 @@ def get_filtered_logs(severity_filter=None):
         query += " WHERE severity = ?"
         params = (severity_filter,)
         
-    # Bloco para ajudar a filtrar e ordernar os logs de acordo com a gravidade do alerta
+    # A section to help filter and sort logs based on alert severity
     query += ''' ORDER BY 
                  CASE severity 
                     WHEN 'HIGH' THEN 1 

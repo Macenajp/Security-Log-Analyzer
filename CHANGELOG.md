@@ -3,6 +3,17 @@
 This document tracks structural and interface updates to the Security Log Analyzer (SecLA) and will be updated regularly to reflect any details and/or content added to the project.
 
 ---
+## [v1.3.1] - Internationalization & Interactive Dashboard
+**Focus:** Global accessibility, database consumption, and rapid reporting.
+
+* **Translation:** Translated all internal code elements (functions, variables, comments, and docstrings) to English, cementing the project's open-source global reach.
+* **Dashboard Script:** Created `scripts/dashboard.py` for instant, read-only SQLite database querying using logical mathematical sorting (`CASE` statement for HIGH, MEDIUM, LOW).
+* **Export Tool:** Implemented a CSV export function utilizing `datetime.strftime` to generate unique, timestamped files in a 12-hour format (example: logs_`%Y-%m-%d_%I-%M-%S-%p`_ALL.csv).
+
+<br>
+
+
+---
 ## [v1.3] - Multi-Format Engine & Data Persistence
 **Focus:** Log ingestion expansion, strict AI reasoning, and relational database storage.
 
@@ -31,6 +42,7 @@ This document tracks structural and interface updates to the Security Log Analyz
 
 <br>
 
+
 ---
 ## [v1.2.1] - Architectural Restructuring
 **Focus:** Code organization, scalability, and workspace maintainability.
@@ -40,6 +52,7 @@ This document tracks structural and interface updates to the Security Log Analyz
 * Updated internal Python imports to reflect the new flat-to-modular architecture.
 
 <br>
+
 
 ---
 
@@ -57,6 +70,7 @@ This document tracks structural and interface updates to the Security Log Analyz
 
 <br>
 
+
 ---
 
 ## [v1.1] - TUI & Telemetry
@@ -70,6 +84,7 @@ This document tracks structural and interface updates to the Security Log Analyz
 > **<img width="1023" height="578" alt="Image" src="https://github.com/user-attachments/assets/e64a20b4-78c2-4a5c-86f4-fc109b1affee" />**
 
 <br>
+
 
 ---
 

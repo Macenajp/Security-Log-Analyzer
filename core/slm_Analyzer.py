@@ -6,32 +6,32 @@ import re
 def analyze_log_ia(log_Line, model="gemma3:4b"):
     url = "http://localhost:11434/api/generate"
     
-    # Bloco do prompt imutável para a criação do Json
+    # Immutable prompt block for creating JSON
     prompt_str = f"""
-    Analise o seguinte log de segurança. 
-    Responda APENAS com um objeto JSON válido contendo as chaves:
-    - "ip": (IP do atacante)
-    - "threat": (classifique usando EXATAMENTE UMA destas opções: "BRUTE_FORCE", "INVALID_USER", "SQL_INJECTION", "PATH_TRAVERSAL", "FORBIDDEN_ACCESS", "RESOURCE_NOT_FOUND")
-    - "severity": (use EXATAMENTE "LOW", "MEDIUM" ou "HIGH")
+    Analyze the following security log. 
+    Respond ONLY with a valid JSON object containing the keys:
+    - "ip": (Attacker's IP)
+    - "threat": (classify using EXACTLY ONE of these options: "BRUTE_FORCE", "INVALID_USER", "SQL_INJECTION", "PATH_TRAVERSAL", "FORBIDDEN_ACCESS", "RESOURCE_NOT_FOUND")
+    - "severity": (use EXACTLY "LOW", "MEDIUM", or "HIGH")
     
-    Regras de Classificação de Ameaça (threat) - AVALIE NESTA ORDEM EXATA DE PRIORIDADE:
-    1. Se o log contiver 'UNION SELECT' ou 'OR 1=1', use "SQL_INJECTION".
-    2. Se o log contiver buscas por diretórios sensíveis (ex: '.env', '.git', 'config.php', 'passwd'), use "PATH_TRAVERSAL".
-    3. Se o log contiver 'Failed password' ou 'Invalid user', use "INVALID_USER" ou "BRUTE_FORCE".
-    4. Se o log retornar bloqueio (HTTP 403) E NÃO se encaixar em NENHUMA das regras acima, use "FORBIDDEN_ACCESS".
-    5. Se o log retornar página não encontrada (HTTP 404), use "RESOURCE_NOT_FOUND".
+    Threat Classification Rules - EVALUATE IN THIS EXACT ORDER OF PRIORITY:
+    1. If the log contains 'UNION SELECT' or 'OR 1=1', use "SQL_INJECTION".
+    2. If the log contains searches for sensitive directories (e.g., '.env', '.git', 'config.php', 'passwd'), use "PATH_TRAVERSAL".
+    3. If the log contains 'Failed password' or 'Invalid user', use "INVALID_USER" or "BRUTE_FORCE".
+    4. If the log returns a block (HTTP 403) AND does NOT fit ANY of the rules above, use "FORBIDDEN_ACCESS".
+    5. If the log returns page not found (HTTP 404), use "RESOURCE_NOT_FOUND".
     
-    Regras de Severidade (severity):
-    - "HIGH": Injeções SQL, acessos a arquivos '.env' ou ataques usando usuários como 'root' e 'admin'.
-    - "MEDIUM": Acesso negado comum (403) em páginas web não críticas ou falha de login de usuários normais.
-    - "LOW": Erros de página não encontrada (404) ou qualquer outra anomalia menor.
+    Severity Rules (severity):
+    - "HIGH": SQL Injections, access to '.env' files, or attacks using users like 'root' and 'admin'.
+    - "MEDIUM": Common access denied (403) on non-critical web pages or login failures from standard users.
+    - "LOW": Page not found errors (404) or any other minor anomaly.
     
-    NÃO inclua nenhuma explicação, texto adicional, markdown ou blocos de raciocínio.
+    DO NOT include any explanations, additional text, markdown, or reasoning blocks.
     
     Log: '{log_Line}'
     """
     
-    dados = {
+    data = {
         "model": model,
         "prompt": prompt_str,
         "stream": False,
@@ -42,18 +42,18 @@ def analyze_log_ia(log_Line, model="gemma3:4b"):
     }
     
     try:
-        answer = requests.post(url, json=dados)
+        answer = requests.post(url, json=data)
         answer.raise_for_status()
         
-        all_Data = answer.json()
-        plain_text = all_Data.get("response", "").strip()
+        all_data = answer.json()
+        plain_text = all_data.get("response", "").strip()
 
-        tokens = all_Data.get("eval_count", 0)
-        time_nanoseconds = all_Data.get("eval_duration", 1)
+        tokens = all_data.get("eval_count", 0)
+        time_nanoseconds = all_data.get("eval_duration", 1)
         time_seconds = time_nanoseconds / 1e9
         tokens_per_seconds = tokens / time_seconds if time_seconds > 0 else 0
 
-        # Filtro de Regex para ignorar markdown (ex: ```json) e salvar apenas as chaves
+        # Regex filter to ignore Markdown (e.g., ```json)) and save only the keys
         match = re.search(r'\{.*\}', plain_text, re.DOTALL)
         clean_json_str = match.group(0) if match else plain_text
             
@@ -65,6 +65,6 @@ def analyze_log_ia(log_Line, model="gemma3:4b"):
         return structured_response
         
     except json.JSONDecodeError:
-        return {"error": "Falha ao estruturar o JSON", "raw_output": plain_text}
+        return {"error": "Error structuring the JSON", "raw_output": plain_text}
     except requests.exceptions.RequestException as e:
-        return {"error": f"Erro de conexão: {e}"}
+        return {"error": f"Connection Error: {e}"}

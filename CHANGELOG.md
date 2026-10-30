@@ -3,10 +3,24 @@
 This document tracks structural and interface updates to the Security Log Analyzer (SecLA) and will be updated regularly to reflect any details and/or content added to the project.
 
 ---
+## [v1.3.2] - Syslog Engine & Kernel Threat Detection
+**Focus:** Hybrid log ingestion, internal system failure detection, and API protection.
+
+* **Hybrid Traffic Generator:** Upgraded `scripts/generator_dummy_logs.py` to synthesize a mix of Web (Nginx/Apache), Auth (SSH), and System (Syslog/Kernel) events in a single stream.
+* **Kernel Anomaly Classification:** Expanded the `slm_analyzer.py` prompt hierarchy to identify system-level failures (e.g., `kernel panic`, `segfault`) and correctly tag them as `SYSTEM_FAILURE`.
+* **Local Event Handling:** Instructed the AI to assign `LOCAL_SYSTEM` to internal events lacking an external IP address.
+* **API Protection:** Modified `ui.py` and `dashboard.py` to bypass VirusTotal API checks for `LOCAL_SYSTEM` events, preventing API errors and unnecessary quota consumption, while rendering these events cleanly in the terminal (`[dim]`).
+
+> **<img width="1023" height="497" alt="Image" src="https://github.com/user-attachments/assets/a431c204-2c21-4cdc-803d-e05a400c27a7" />**
+
+<br>
+
+
+---
 ## [v1.3.1] - Internationalization & Interactive Dashboard
 **Focus:** Global accessibility, database consumption, and rapid reporting.
 
-* **Translation:** Translated all internal code elements (functions, variables, comments, and docstrings) to English, cementing the project's open-source global reach.
+* **Codebase Internationalization (i18n):** Complete translation of the project's source code, variables, docstrings, and comments to English, establishing a global standard for the repository and future contributors.
 * **Dashboard Script:** Created `scripts/dashboard.py` for instant, read-only SQLite database querying using logical mathematical sorting (`CASE` statement for HIGH, MEDIUM, LOW).
 * **Export Tool:** Implemented a CSV export function utilizing `datetime.strftime` to generate unique, timestamped files in a 12-hour format (example: logs_`%Y-%m-%d_%I-%M-%S-%p`_ALL.csv).
 

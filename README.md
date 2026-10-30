@@ -8,11 +8,12 @@ SecLA (Security Log Analyzer) functions as a security log reader that integrates
 
 ---
 
-## 🚀 | Updates (v1.3.1)
+## 🚀 | Updates (v1.3.2)
 
-* **Codebase Internationalization (i18n):** Complete translation of the project's source code, variables, docstrings, and comments to English, establishing a global standard for the repository and future contributors.
-* **Interactive Event Dashboard:** Introduced `scripts/dashboard.py`, a new CLI tool to instantly query and filter the SQLite database by threat severity (HIGH, MEDIUM, LOW) without needing to re-run the AI engine.
-* **Automated CSV Export:** Added a one-click export feature within the dashboard to generate clean, filtered reports with professional ISO 8601 12-hour timestamps (e.g., `logs_2026-10-27_02-45-30-PM_HIGH.csv`).
+* **Multi-Format Engine Completion:** The system now successfully ingests and parses hybrid logs in a single stream, combining Web (Nginx/Apache), Auth (SSH), and System (Syslog/Kernel) events.
+* **Kernel Threat Detection:** The AI engine is now capable of identifying internal system failures, such as `kernel panics` and `segfaults`, automatically classifying them under the `SYSTEM_FAILURE` threat category.
+* **Smart API Bypassing:** Internal events lacking an external IP address (tagged as `LOCAL_SYSTEM`) dynamically bypass the VirusTotal API checks, preventing invalid requests and saving API quotas.
+* **Interactive Event Dashboard:** The `scripts/dashboard.py` tool provides instant, read-only SQLite database querying with logical severity filtering and a one-click automated CSV export feature using professional ISO 8601 12-hour timestamps.
 
 <br>
 

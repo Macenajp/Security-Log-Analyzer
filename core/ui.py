@@ -83,14 +83,15 @@ def start_interface():
                 if level in stats_severity:
                     stats_severity[level] += 1
 
-                result_virustotal = "No IP address to check"
-                if source != 'N/A':
+                # v1.3.2 It now ignores API calls when the event originates from the system (LOCAL_SYSTEM)
+                result_virustotal = "Local Event (No IP)"
+                if source not in ['N/A', 'LOCAL_SYSTEM', 'NONE', '']:
                     if source in cache_ips:
                         result_virustotal = cache_ips[source]
                     else:
                         result_virustotal = check_ip(source)  
                         cache_ips[source] = result_virustotal
-                    save_cache(cache_ips)
+                        save_cache(cache_ips)
 
                     if result_virustotal.startswith("WARNING") or result_virustotal.startswith("ERROR"):
                         stats_vt["THREAT"] += 1
@@ -106,6 +107,8 @@ def start_interface():
 
                 if result_virustotal.startswith("WARNING") or result_virustotal.startswith("ERROR"):
                     formatted_virustotal = f"[bold red]{result_virustotal}[/bold red]"
+                elif result_virustotal == "Local Event (No IP)":
+                    formatted_virustotal = f"[dim]{result_virustotal}[/dim]"
                 else:
                     formatted_virustotal = f"[bold green]{result_virustotal}[/bold green]"
 

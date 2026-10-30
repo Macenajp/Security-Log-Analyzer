@@ -90,8 +90,14 @@ def show_dashboard():
             formatted_sev = f"[bold yellow]{sev}[/bold yellow]"
         else:
             formatted_sev = f"[bold green]{sev}[/bold green]"
-            
-        vt_color = "[bold red]" if "WARNING" in vt.upper() else "[bold green]"
+
+        # v1.3.2 | Color correction
+        if "WARNING" in vt.upper() or "ERROR" in vt.upper():
+            vt_color = "[bold red]"
+        elif "LOCAL EVENT" in vt.upper():
+            vt_color = "[dim]"
+        else:
+            vt_color = "[bold green]"
         
         table.add_row(timestamp, ip, threat, formatted_sev, f"{vt_color}{vt}[/]")
 

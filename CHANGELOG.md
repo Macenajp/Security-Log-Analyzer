@@ -2,6 +2,20 @@
 
 This document tracks structural and interface updates to the Security Log Analyzer (SecLA) and will be updated regularly to reflect any details and/or content added to the project.
 
+
+---
+## [v1.3.3] - Dashboard UI/UX Optimization
+**Focus:** Executive reporting and proportional data visualization within the terminal.
+
+* **Layout Upgrade:** Refactored `dashboard.py` using `rich.layout` and `Table.grid` to create a denser, unified view for the Main Event Table and metrics panels.
+* **Proportional Charts:** Replaced static values with dynamically scaled horizontal bar charts in the `Severity Breakdown`, mapping the highest threat count to 100% of the available width.
+* **Top Attackers Matrix:** Added a new "Top 5 Attacker IPs By Severity" panel, splitting primary aggressors across Global, High, Medium, and Low columns.
+
+> **<img width="1920" height="623" alt="Image" src="https://github.com/user-attachments/assets/39a78f3a-0a3b-4e90-affc-915e7e4cf517" />**
+
+<br>
+
+
 ---
 ## [v1.3.2] - Syslog Engine & Kernel Threat Detection
 **Focus:** Hybrid log ingestion, internal system failure detection, and API protection.

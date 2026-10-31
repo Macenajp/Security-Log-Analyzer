@@ -8,12 +8,12 @@ SecLA (Security Log Analyzer) functions as a security log reader that integrates
 
 ---
 
-## 🚀 | Updates (v1.3.2)
+## 🎯 | Updates (v1.3.3)
 
-* **Multi-Format Engine Completion:** The system now successfully ingests and parses hybrid logs in a single stream, combining Web (Nginx/Apache), Auth (SSH), and System (Syslog/Kernel) events.
-* **Kernel Threat Detection:** The AI engine is now capable of identifying internal system failures, such as `kernel panics` and `segfaults`, automatically classifying them under the `SYSTEM_FAILURE` threat category.
-* **Smart API Bypassing:** Internal events lacking an external IP address (tagged as `LOCAL_SYSTEM`) dynamically bypass the VirusTotal API checks, preventing invalid requests and saving API quotas.
-* **Interactive Event Dashboard:** The `scripts/dashboard.py` tool provides instant, read-only SQLite database querying with logical severity filtering and a one-click automated CSV export feature using professional ISO 8601 12-hour timestamps.
+* **Proportional Terminal Graphics:** The interactive SQLite dashboard now features dynamic, mathematically scaled bar charts for threat severities, maximizing the available terminal width.
+* **Executive Threat Ranking:** A new "Top 5 Attacker IPs" matrix instantly isolates primary aggressors across Global, High, Medium, and Low severities.
+* **Layout Engine Upgrade:** Refactored from floating UI panels to a strict `rich.layout` engine, creating a unified, edge-to-edge layout for the Event Database and visual metrics.
+* **Multi-Format Engine Completion (v1.3.2):** The system successfully ingests and parses hybrid logs (Web, SSH, Syslog/Kernel) in a single stream, automatically bypassing APIs for internal `LOCAL_SYSTEM` errors.
 
 <br>
 
@@ -50,7 +50,7 @@ Prerequisites: Ensure you have Python3 and Ollama installed and running on your 
     python generator_dummy_logs.py  # Generates a local 'test_auth.log' with simulated attacks
     ```
     ```bash
-    python main.py
+    python main.py  # You'll need to keep Ollama open (in the foreground or background) for the program to run properly
     ```
 <br>
 

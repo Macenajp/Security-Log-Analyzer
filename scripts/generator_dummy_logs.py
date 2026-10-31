@@ -3,7 +3,7 @@ import random
 from datetime import datetime, timedelta
 
 
-def generate_dummy_logs(filename="data/test_auth.log", num_lines=500):
+def generate_dummy_logs(filename="data/test_auth.log", num_lines=50):
     # Garante que a pasta 'data/' existe antes de tentar criar o arquivo
     os.makedirs(os.path.dirname(filename), exist_ok=True)
 
